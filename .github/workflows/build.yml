@@ -38,7 +38,12 @@ jobs:
 
       - name: Build APK with Buildozer
         run: |
-          buildozer -v android debug
+          # Вписываем автоматическое согласие с лицензиями Google
+          echo "" >> buildozer.spec
+          echo "android.accept_sdk_license = True" >> buildozer.spec
+          
+          # Запускаем сборку с автоответом 'Y' на все вопросы
+          yes | buildozer -v android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
